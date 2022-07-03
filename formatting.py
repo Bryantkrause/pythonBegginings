@@ -11,4 +11,7 @@ print("Pi is aprox {0:12f}".format(22/7))
 print("Pi is aprox {0:12.50f}".format(22/7))
 print("Pi is aprox {0:52.50f}".format(22/7))
 print("Pi is aprox {0:62.50f}".format(22/7))
+pi = 22/7
 print("Pi is aprox {0:72.50f}".format(22/7))
+print(f"Pi is aprox {pi:12.50f}")
+#who needs .format when you can just f it
