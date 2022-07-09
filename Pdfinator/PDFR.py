@@ -1,6 +1,7 @@
 import PyPDF2
 import csv
 import os
+import string
 
 path = r"C:\Users\bryan\Desktop\rebirth\pythonBeginings\Pdfinator"
 dirs = os.listdir(path)
@@ -33,7 +34,7 @@ f.close()
 
 
 # find start of invoice #
-
+import re
 
 for file in dirs:
     print(file)
@@ -47,6 +48,9 @@ with open(r"C:\Users\bryan\Desktop\rebirth\pythonBeginings\Pdfinator\csv_file.cs
             writer.writerow(new_row)
             invoiceNumber = ' '.join(new_row)
             # print(invoiceNumber)
-            invoiceFinder = invoiceNumber.find('I n v o i c e   #')
-            print(invoiceNumber.find('3 6 9 0 7'))
-            print(invoiceNumber[invoiceFinder+20:invoiceFinder+30])
+            invoiceNumberNoSpace = re.sub(r"\s+", "", invoiceNumber, flags=re.UNICODE)
+            # invoiceNumber.replace(" ","")
+            print(invoiceNumberNoSpace)
+            invoiceFinder = invoiceNumber.find('Invoice#')
+            # print(invoiceNumber.find('3 6 9 0 7'))
+            # print(invoiceFinder)
