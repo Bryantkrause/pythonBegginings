@@ -3,6 +3,12 @@ import csv
 import os
 import string
 
+
+InFin='Invoice#'
+#len25
+Description = '#DescriptionQtyRateAmount'
+#len8
+DescriptionEnd = 'RemitTo:'
 path = r"C:\Users\bryan\Desktop\rebirth\pythonBeginings\Pdfinator"
 dirs = os.listdir(path)
 # creating a pdf file object
@@ -46,11 +52,20 @@ with open(r"C:\Users\bryan\Desktop\rebirth\pythonBeginings\Pdfinator\csv_file.cs
         for row in reader:
             new_row = [' '.join(row)]
             writer.writerow(new_row)
+            #convert list intro string
             invoiceNumber = ' '.join(new_row)
-            # print(invoiceNumber)
+            
+            #this magic removes magical whitespace and spaces and invisible barriers
             invoiceNumberNoSpace = re.sub(r"\s+", "", invoiceNumber, flags=re.UNICODE)
-            # invoiceNumber.replace(" ","")
+            
             print(invoiceNumberNoSpace)
-            invoiceFinder = invoiceNumber.find('Invoice#')
-            # print(invoiceNumber.find('3 6 9 0 7'))
-            # print(invoiceFinder)
+            #need to find invoice number
+            invoiceFinder = invoiceNumberNoSpace.find('Invoice#')
+            #This finds the invoice number and prints it
+            print(invoiceNumberNoSpace[invoiceFinder +
+                  len(InFin):invoiceFinder+len(InFin)+5])
+
+            #
+            print(len(DescriptionEnd))
+
+# subtract descriptionend by description to find total length of amazing description of work
