@@ -2,8 +2,9 @@ import os
 
 # path = r"C:\Users\bryan\Desktop\rebirth\pythonBeginings\Pdfinator"
 
-def getFiles():
-    fileFolder=[]
+
+def getFiles(fileFolder):
+    
     directory = r"C:\Users\bryan\Desktop\rebirth\pythonBeginings\Pdfinator\Files"
 
     # iterate over all files in directory
@@ -12,5 +13,6 @@ def getFiles():
        # checking if it is a file
        if os.path.isfile(f):
           # print(f)
-          fileFolder.append(f)
+          fileFolder.append(f) 
+          
 
