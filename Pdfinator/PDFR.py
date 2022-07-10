@@ -2,13 +2,17 @@ import PyPDF2
 import csv
 import os
 import string
+import FileLooper
 
-
+FileLooper.getFiles()
 InFin='Invoice#'
 #len25
 Description = '#DescriptionQtyRateAmount'
 #len8
 DescriptionEnd = 'RemitTo:'
+
+DescriptionFind = len(Description)
+DescriptonClose = len(DescriptionEnd)
 path = r"C:\Users\bryan\Desktop\rebirth\pythonBeginings\Pdfinator"
 dirs = os.listdir(path)
 # creating a pdf file object
@@ -58,14 +62,17 @@ with open(r"C:\Users\bryan\Desktop\rebirth\pythonBeginings\Pdfinator\csv_file.cs
             #this magic removes magical whitespace and spaces and invisible barriers
             invoiceNumberNoSpace = re.sub(r"\s+", "", invoiceNumber, flags=re.UNICODE)
             
-            print(invoiceNumberNoSpace)
+            # print(invoiceNumberNoSpace)
             #need to find invoice number
             invoiceFinder = invoiceNumberNoSpace.find('Invoice#')
             #This finds the invoice number and prints it
             print(invoiceNumberNoSpace[invoiceFinder +
                   len(InFin):invoiceFinder+len(InFin)+5])
 
-            #
-            print(len(DescriptionEnd))
+            invoiceDescriptionStart = invoiceNumberNoSpace.find(Description)
+            invoiceDescriptionEnd = invoiceNumberNoSpace.find(DescriptionEnd)
 
-# subtract descriptionend by description to find total length of amazing description of work
+            print(
+                invoiceNumberNoSpace[invoiceDescriptionStart + DescriptionFind:invoiceDescriptionEnd])
+
+
