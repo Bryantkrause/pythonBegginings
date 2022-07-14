@@ -1,0 +1,15 @@
+age = int(input("How old are you? "))
+
+if age >= 16 and age <= 65:
+    print("have worky fun")
+
+day = "monday"
+
+tempurature = 30
+
+raining = True
+
+if (day == "saturday" and tempurature > 27) or not raining:
+    print("Go Swimming")
+else:
+    print("Learn Python")
