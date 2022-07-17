@@ -6,7 +6,6 @@ import os
 def getFiles(fileFolder):
     
     directory = r"C:\Users\bryan\Desktop\rebirth\pythonBeginings\Pdfinator\Files"
-
     # iterate over all files in directory
     for filename in os.listdir(directory):
        f = os.path.join(directory, filename)
