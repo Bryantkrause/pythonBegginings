@@ -1,7 +1,10 @@
-jabber = open('.\\Jabberwocky.txt', 'r')
+# jabber = open('.\\Jabberwocky.txt', 'r')
 
-for line in jabber:
-    print(line)
+# for line in jabber:
+#     print(line)
 
-jabber.close()
+# jabber.close()
 
+with open('Jabberwocky.txt', encoding='utf-8') as jabber:
+    for line in jabber:
+        print(line.rstrip())
