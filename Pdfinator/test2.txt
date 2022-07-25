@@ -1,0 +1,37 @@
+0 Gold Standard Service Corp. Invoice
+1 P.O. BOX 4831
+2 Rancho Cucamonga, CA 91729 Date: 6/3/2022
+3 gold-standard@hotmail.com
+4 Invoice # 36908
+5 (877)313-3552 Of...
+6 Work Order # 36908
+7 Bill To Ship To
+8 Total Transportation & Distribution 210 E. Lambert Rd.
+9 210 East Lambert Road, Fullerton, CA
+10 Fullerton, CA 92833
+11 P.O. # LS210-S7-51520 Terms: Due on receipt
+12 Unit # S7 Due Date: 6/3/2022
+13 Hour Meter: 2900 Ship Date: 6/3/2022 Tech: JR
+14 Serial # SA-06-05145 Model: RaymondSACSR30T
+15 Description Qty Rate Amount
+16 Labor Special  Rate Total Trans:  6/2  Check side 5 121.50 607.50
+17 gate and code 29.  Repair right side gate pivot screw
+18 thread.  Drill and tap.  Install shelf coil.  Install new
+19 pivot and snap ring.  Replace right console gas spring.
+20 6/3  Install rebuilt drive motor shaft with brake.
+21 Replace main height manager.
+22 Drive motor  Rebuilt Shaft 1 1,072.50 1,072.50T
+23 Heli Coil 1/2 x 24 1 10.45 10.45T
+24 Pivot Stud 1 62.70 62.70T
+25 Snap Ring 1 6.95 6.95T
+26 Spring 1 91.75 91.75T
+27 Height Manager 1 979.69 979.69T
+28 Thank you for choosing Gold Standard Service for all your material
+29  Subtotal $2,831.54
+30 handling needs.
+31  Sales Tax (9.5%) $211.28
+32  Total $3,042.82
+33 Remit To: Gold Standard Service Corp.
+34  Payments/Credits $0.00
+35 P. O. Box 4831
+36 Rancho Cucamonga, CA 91729 $3,042.82
