@@ -17,6 +17,24 @@ descStart = ''
 invoiceLine = re.compile(r'Invoice ')
 descriptionCombine = []
 descriptinator = ''
+invoiceNumber = ''
+invoiceDate = ''
+meterHour = ''
+unitnumber = ''
+descriptionAll = ''
+InvoiceDetail = {
+    'Invoice_Number': invoiceNumber,
+    'Invoice_Date': invoiceDate,
+    'Meter_Hours': meterHour,
+    'Unit': unitnumber,
+    'Description': descriptionAll
+
+}
+allInformation = []
+
+headers = ['Invoice_Number', 'Invoice_Date',
+           'Meter_Hours', 'Unit', 'Description']
+
 # creating a pdf file object
 with pdfplumber.open(file) as pdf:
     page = pdf.pages[0]
@@ -31,22 +49,24 @@ with pdfplumber.open(file) as pdf:
 # get invoice number
 for line in text.split('\n'):
     if invoiceLine.match(line):
-        invoiceNumber = line.lstrip("Invoice # ")
-        print(f"invoice number is: {invoiceNumber}")
+        invoiceNum = line.lstrip("Invoice # ")
+        InvoiceDetail.update({"Invoice_Number": f'{invoiceNum}'})
+        print(f"invoice number is: {invoiceNum}")
 
 # get meter hours and row number
 for x, line in enumerate(text.split('\n')):
     if hourLine.match(line):
         rowNum, *hours = line.split()
         meterHours = re.search(r'\d+', line).group()
+        InvoiceDetail.update({"Meter_Hours": f'{meterHours}'})
         print(x, f" meter hours are: {meterHours}")
 
 # get unit number
 for x, line in enumerate(text.split('\n')):
     if unit.match(line):
         unitNumber = line.lstrip("Unit # ").split(" ", 1)[0]
+        InvoiceDetail.update({"Unit": f'{unitNumber}'})
         print(x, f"unit number is: {unitNumber}")
-
 
 
 # get start of description line
@@ -70,11 +90,17 @@ for x, line in enumerate(text.split('\n')):
         descriptionCombine.append(line)
         # print(descriptionCombine)
 
-descriptinator =''.join(descriptionCombine)
+descriptinator = ''.join(descriptionCombine)
+InvoiceDetail.update({"Description": f'{descriptinator}'})
 print(descriptinator)
 
 for x, line in enumerate(text.split('\n')):
     if x == 2:
         # print(line)
-        invoiceDate = re.search('([0-9]\/[0-9]\/[0-9]{4})', line).group()
-        print(f"Invoice date is: {invoiceDate}")
+        invoiceDt = re.search('([0-9]\/[0-9]\/[0-9]{4})', line).group()
+        InvoiceDetail.update({"Invoice_Date": f'{invoiceDt}'})
+        print(f"Invoice date is: {invoiceDt}")
+
+
+allInformation.append(InvoiceDetail)
+print(allInformation)
