@@ -4,9 +4,9 @@ import csv
 import re
 
 from Old import Description, DescriptionEnd
-
+# 33593R9Jani
 # list of vars
-file = f'.//Files//36908.pdf'
+file = f'.//Files//36907.pdf'
 invoiceList = []
 hourLine = re.compile(r'Hour Meter: ')
 unit = re.compile(r'Unit # ')
@@ -97,10 +97,17 @@ print(descriptinator)
 for x, line in enumerate(text.split('\n')):
     if x == 2:
         # print(line)
-        invoiceDt = re.search('([0-9]\/[0-9]\/[0-9]{4})', line).group()
+        # invoiceDt = re.search('([0-9]\/[0-9]\/[0-9])', line).group()
+        invoiceDt = re.search(r'(\d+/\d+/\d+)', line).group()
         InvoiceDetail.update({"Invoice_Date": f'{invoiceDt}'})
         print(f"Invoice date is: {invoiceDt}")
 
 
 allInformation.append(InvoiceDetail)
-print(allInformation)
+
+file = 'superCoolListThingy.csv'
+with open(file, 'w', encoding='utf-8', newline='') as output:
+    writer = csv.DictWriter(output, fieldnames=headers, extrasaction='ignore')
+    writer.writeheader()
+    for row in allInformation:
+        writer.writerow(row)
