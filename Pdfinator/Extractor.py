@@ -14,26 +14,26 @@ descriptionEnd = re.compile(r'Thank you for choosing Gold Standard Service')
 descEnd = ''
 descStart = ''
 invoiceLine = re.compile(r'Invoice ')
-descriptionCombine = []
 descriptinator = ''
+descriptionCombine = []
 invoiceNumber = ''
 invoiceDate = ''
 meterHour = ''
 unitnumber = ''
-descriptionAll = ''
-
+descriptionAll = []
 
 
 headers = ['Invoice_Number', 'Invoice_Date',
            'Meter_Hours', 'Unit', 'Description']
 
 
-def parseData(fileFolder, allInformation):
+def parseData(fileFolder):
     invoices= []
     dates=[]
     hours=[]
     units=[]
     descriptions=[]
+    descriptionCombine.clear()
 
 
     invKey= 'Invoice_Number'
@@ -46,10 +46,8 @@ def parseData(fileFolder, allInformation):
 # creating a pdf file object
     for y , file in enumerate(fileFolder):
         invoiceList.append(y)
-        print(y, file)
-        # print(f"this is what i need{x}" ,file)
+
         with pdfplumber.open(file) as pdf:
-            # print(file)
             page = pdf.pages[0]
             text = page.extract_text()
 
@@ -59,8 +57,7 @@ def parseData(fileFolder, allInformation):
             if invoiceLine.match(line):
                 invoiceNum = line.lstrip("Invoice # ")
                 invoices.insert(x, invoiceNum)
-                
-                
+                  
         # # get meter hours and row number
         for x, line in enumerate(text.split('\n')):
             if hourLine.match(line):
@@ -78,63 +75,45 @@ def parseData(fileFolder, allInformation):
         # # get start of description line
         for x, line in enumerate(text.split('\n')):
             if description.match(line):
-                # print(x,  line)
                 descStart = x
-        # print(descStart)
-
+        
         # get end of description
         for x, line in enumerate(text.split('\n')):
             if descriptionEnd.match(line):
-                # print(x,  line)
                 descEnd = x
-        # print(descEnd)
 
-        # # get only description
+        # clear list
+        descriptionCombine.clear()
+
+        # get only description
         for x, line in enumerate(text.split('\n')):
-            if descStart < x and x < descEnd:
-                # print(x , line)
+            if descStart < x and x < descEnd:             
                 descriptionCombine.append(line)
-                # print(descriptionCombine)
 
+        # combine all descriptions into one string
         descriptinator = ''.join(descriptionCombine)
-
+        # add combined string to list to be entered
         descriptions.insert(y, descriptinator)
 
-
-
+        # get invoice date
         for x, line in enumerate(text.split('\n')):
             if x == 2:
-                # print(line)
-                # invoiceDt = re.search('([0-9]\/[0-9]\/[0-9])', line).group()
+
                 invoiceDt = re.search(r'(\d+/\d+/\d+)', line).group()
                 dates.append(invoiceDt)
-        print(invoices)
-        print(hours)
-        print(units)
-        print(dates)
-        print(len(descriptions))
 
+    # combine all lists
     newDict = [{invKey: v1, dtKey: v2, unitKey: v3, hrKey: v4, descKey: v5}
-               for v1, v2, v3, v4, v5 in zip(invoices, dates, units, hours, units)]
-    print(newDict)
-    
+               for v1, v2, v3, v4, v5 in zip(invoices, dates, units, hours, descriptions)]
 
+    # input parsed data into csv
+    with open(fileOutPut, 'w', encoding='utf-8', newline='') as output:
 
-    
-        
-
-
-
-# def writeData(allInformation):
-#     # print(allInformation)
-#     with open(fileOutPut, 'w', encoding='utf-8', newline='') as output:
-#         # print(allInformation)
-#         writer = csv.DictWriter(
-#             output, fieldnames=headers, extrasaction='ignore')
-#         writer.writeheader()
-#         for row in allInformation:
-#             # print(f" this is the row that is being writting {row}")
-#             writer.writerow(row)
+        writer = csv.DictWriter(
+            output, fieldnames=headers, extrasaction='ignore')
+        writer.writeheader()
+        for row in newDict:
+            writer.writerow(row)
 
     
 
