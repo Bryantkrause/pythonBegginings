@@ -58,49 +58,48 @@ def parseData(fileFolder):
         for x, line in enumerate(text.split('\n')):
             if invoiceLine.match(line):
                 invoiceNum = line.lstrip("Invoice # ")
-                invoices.insert(x, invoiceNum)
+                invoices.append(invoiceNum)
                   
         # # get meter hours and row number
         for x, line in enumerate(text.split('\n')):
             if hourLine.match(line):
                 rowNum, *hour = line.split()
                 meterHours = re.search(r'\d+', line).group()
-                hours.insert(x, meterHours)
+                hours.append(meterHours)
 
         # # get unit number
         for x, line in enumerate(text.split('\n')):
             if unit.match(line):
                 unitNumber = line.lstrip("Unit # ").split(" ", 1)[0]
-                units.insert(x, unitNumber)
+                units.append(unitNumber)
 
 
         # # get start of description line
-        for x, line in enumerate(text.split('\n')):
+        for start, line in enumerate(text.split('\n')):
             if description.match(line):
-                descStart = x
+                descStart = start
         
         # get end of description
-        for x, line in enumerate(text.split('\n')):
+        for end, line in enumerate(text.split('\n')):
             if descriptionEnd.match(line):
-                descEnd = x
+                descEnd = end
 
         # clear list
         descriptionCombine.clear()
 
         # get only description
-        for x, line in enumerate(text.split('\n')):
-            if descStart < x and x < descEnd:             
+        for rowFind, line in enumerate(text.split('\n')):
+            if descStart < rowFind and rowFind < descEnd:
                 descriptionCombine.append(line)
 
         # combine all descriptions into one string
         descriptinator = ''.join(descriptionCombine)
         # add combined string to list to be entered
-        descriptions.insert(y, descriptinator)
+        descriptions.append(descriptinator)
 
         # get invoice date
         for x, line in enumerate(text.split('\n')):
             if x == 2:
-
                 invoiceDt = re.search(r'(\d+/\d+/\d+)', line).group()
                 dates.append(invoiceDt)
 
