@@ -6,7 +6,7 @@ import os
 def getFiles(fileFolder):
     
    # directory = r".//Files"
-   directory = r'\\appserver2k8\finance\2022 Finance\BK\Spendwise\GoldStandard2022'
+   directory = r'\\appserver2k8\finance\2022 Finance\BK\Spendwise\GoldStandard2021'
     # iterate over all files in directory
    for filename in os.listdir(directory):
       f = os.path.join(directory, filename)
