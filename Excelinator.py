@@ -7,13 +7,10 @@ df = pd.read_excel('ForkliftEverything.xlsx')
 # split out month and year
 df['year'] = pd.DatetimeIndex(df['Date']).year
 df['month'] = pd.DatetimeIndex(df['Date']).month
-# print(df)
-# create refined data// select only actual needed columns
 
-# print(df.info())
+excel_file = 'refined.xlsx'
+sheet_name = 'chartyMcChartFace'
 
-# df['Date'] = pd.to_datetime(df['Date'], unit='D', origin='1899-12-30')
-# print(df.info())
 
 
 newDF = df[['Voucher #', 'Vendor', 'Quantity','Date',
@@ -31,6 +28,8 @@ monthly = newDF.groupby([ 'Date','year', 'month'])[
 # summary by forklift
 forklift = newDF.groupby(['Tag', 'year', 'month'])['Total','Quantity'].sum()
 
+nForklift = newDF.groupby(['Tag', 'year'])['Total'].sum()
+
 # check if file exists if not create it
 if os.path.isfile('./refined.xlsx'):
     print('removing file its for your own good')
@@ -40,6 +39,7 @@ if os.path.isfile('./refined.xlsx'):
         monthly.to_excel(writer, sheet_name='byMonth')
         forklift.to_excel(writer, sheet_name='byForklift')
         newDF.to_excel(writer, sheet_name='panda1')
+        nForklift.to_excel(writer, sheet_name='forkliftByYear')
 else:
     print('creating file without deleting it')
     with pd.ExcelWriter('refined.xlsx') as writer:
@@ -47,3 +47,7 @@ else:
         monthly.to_excel(writer, sheet_name='byMonth')
         forklift.to_excel(writer, sheet_name='byForklift')
         newDF.to_excel(writer, sheet_name='panda1')
+
+
+def makeChart():
+    print('making your chart')
