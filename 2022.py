@@ -1,3 +1,4 @@
+from asyncore import write
 from distutils.log import info
 import pandas as pd
 import numpy as np
@@ -64,14 +65,17 @@ rpivot['Totals'] = rpivot.sum(axis=1, numeric_only=True)
 rpivot.fillna(0, inplace=True)
 rpivot = dpivot.sort_values(by=['Totals'], ascending=False)
 
-with pd.ExcelWriter('MonthlySummary.xlsx') as writer:
-    pivotar.to_excel(writer, sheet_name='Summary')
-    FullertonData.to_excel(writer, sheet_name='Fullerton')
-    fPivot.to_excel(writer, sheet_name='FullertonForks')
-    cpivot.to_excel(writer, sheet_name='CerritosForks')
-    dpivot.to_excel(writer, sheet_name='DowneyForks')
-    rpivot.to_excel(writer, sheet_name='RanchoForks')
 
+# with pd.ExcelWriter('MonthlySummary.xlsx') as writer:
+writer = pd.ExcelWriter('MonthlySummary.xlsx', engine='xlsxwriter')
+
+pivotar.to_excel(writer, sheet_name='Summary')
+FullertonData.to_excel(writer, sheet_name='Fullerton')
+fPivot.to_excel(writer, sheet_name='FullertonForks')
+cpivot.to_excel(writer, sheet_name='CerritosForks')
+dpivot.to_excel(writer, sheet_name='DowneyForks')
+rpivot.to_excel(writer, sheet_name='RanchoForks')
+writer.save()
 
 # for col in pivotar.columns:
 #     columns.append(col)
