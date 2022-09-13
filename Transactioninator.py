@@ -1,7 +1,7 @@
 from cmath import nan
 from msilib.schema import Condition
 from pickle import FALSE
-import pandas as pd 
+import pandas as pd
 import numpy as np
 import re
 
@@ -13,16 +13,18 @@ citiCsv = (r'C:\Users\bryan\Desktop\Transactions\Citibank.CSV')
 
 citi = pd.read_csv(citiCsv, parse_dates=['Date'])
 
-nf['Month'] =pd.DatetimeIndex(nf['Date']).month
+nf['Month'] = pd.DatetimeIndex(nf['Date']).month
 citi['Month'] = pd.DatetimeIndex(citi['Date']).month
+nf['Location'] = 'Navy Fed'
+citi['Location'] = 'CitiBank'
 
 
-
-df = pd.concat([nf,citi], axis=0, ignore_index=True)
+df = pd.concat([nf, citi], axis=0, ignore_index=True)
 print(df.fillna(0))
 
+df['Description'] = df['Description'].str.upper()
 conditions = [
-    df['Description'].str.contains(r'Charter Service', na=False),
+    df['Description'].str.contains(r'CHARTER SERVICE', na=False),
     df['Description'].str.contains(r'CITI AUTOPAY', na=False),
     df['Description'].str.contains(r'CITI CARD', na=False),
     df['Description'].str.contains(r'HOMESITE INS PREM', na=False),
@@ -43,13 +45,13 @@ conditions = [
     df['Description'].str.contains(r'COSTCO', na=False),
     df['Description'].str.contains(r'0130EL12 TOTAL T', na=False),
     df['Description'].str.contains(r'DOMINO', na=False),
-    df['Description'].str.contains(r'Etsy', na=False),
-    df['Description'].str.contains(r'GoFundMe', na=False),
+    df['Description'].str.contains(r'ETSY', na=False),
+    df['Description'].str.contains(r'GOFUNDME', na=False),
     df['Description'].str.contains(r'CAR WASH', na=False),
     df['Description'].str.contains(r'HABIT', na=False),
     df['Description'].str.contains(r'IN N OUT', na=False),
     df['Description'].str.contains(r'JOE SCHMOE', na=False),
-    df['Description'].str.contains(r'Kindle', na=False),
+    df['Description'].str.contains(r'KINDLE', na=False),
     df['Description'].str.contains(r'LITTLE LADYBUG', na=False),
     df['Description'].str.contains(r'MCDONALD', na=False),
     df['Description'].str.contains(r'NEW BALANCE', na=False),
@@ -57,12 +59,18 @@ conditions = [
     df['Description'].str.contains(r'PANDA EXPRESS', na=False),
     df['Description'].str.contains(r'PIEOLOGY', na=False),
     df['Description'].str.contains(r'PIZZA HUT', na=False),
-    df['Description'].str.contains(r'Amzn', na=False),
+    df['Description'].str.contains(r'AMZN', na=False),
     df['Description'].str.contains(r'APPLECOM', na=False),
     df['Description'].str.contains(r'CSC SERVICEWORKS', na=False),
     df['Description'].str.contains(r'GOOGLE', na=False),
-    df['Description'].str.contains(r'HEALTHCARE', na=False)
-    ]
+    df['Description'].str.contains(r'HEALTHCARE', na=False),
+    df['Description'].str.contains(r'TARGET', na=False),
+    df['Description'].str.contains(r'TO SHARES', na=False),
+    df['Description'].str.contains(r'FROM SHARES', na=False),
+    df['Description'].str.contains(r'STATER', na=False),
+    df['Description'].str.contains(r'STEAM', na=False),
+    df['Description'].str.contains(r'WALMART', na=False)
+]
 
 choices = [
     'Charter Service', 'CITI AUTOPAY', 'CITI CARD', 'HOMESITE INS PREM', 'HPS MHC', 'MediCalforFamily',
@@ -70,7 +78,7 @@ choices = [
     'CHEESECAKE', 'CHICK-FIL-A', 'CHIPOTLE', 'COFFEE BEAN', 'COSTCO', 'Pay Check', 'DOMINOS',
     'Etsy', 'GoFundMe', 'CAR WASH', 'HABIT', 'IN N OUT', 'JOE SCHMOE', 'Kindle', 'LITTLE LADYBUG',
     'MCDONALDS', 'SHOES', 'AUTO PARTS', 'PANDA EXPRESS', 'PIEOLOGY', 'PIZZA HUT', 'AMAZON', 'APPLECOM',
-    'CSC SERVICEWORKS', 'GOOGLE', 'HEALTHCARE'
+    'CSC SERVICEWORKS', 'GOOGLE', 'HEALTHCARE', 'TARGET', 'TRANSFER TO SHARES', 'TRANSFER FROM SHARES', 'STATERBROS', 'STEAM', 'WALMART'
 ]
 print(len(conditions))
 print(len(choices))
@@ -88,6 +96,6 @@ df['ChargeType'] = np.select(conditions, choices, default='NA')
 
 # df['ChargeType'] = df['Description'].re.search(r'Amzn.com')
 # print(df['Description'].unique())
-writer = pd.ExcelWriter(refined,engine='xlsxwriter')
+writer = pd.ExcelWriter(refined, engine='xlsxwriter')
 df.to_excel(writer, sheet_name='refined')
 writer.save()
