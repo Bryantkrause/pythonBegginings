@@ -22,7 +22,8 @@ citi['Location'] = 'CitiBank'
 df = pd.concat([nf, citi], axis=0, ignore_index=True)
 print(df.fillna(0))
 
-df['Description'] = df['Description'].str.upper()
+# df['Description'] = df['Description'].str.upper()
+df['Description'] = df['Description'].apply(lambda x: x.upper())
 conditions = [
     df['Description'].str.contains(r'CHARTER SERVICE', na=False),
     df['Description'].str.contains(r'CITI AUTOPAY', na=False),
