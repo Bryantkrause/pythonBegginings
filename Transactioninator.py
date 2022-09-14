@@ -30,7 +30,7 @@ conditions = [
     df['Description'].str.contains(r'CITI CARD', na=False),
     df['Description'].str.contains(r'HOMESITE INS PREM', na=False),
     df['Description'].str.contains(r'HPS MHC', na=False),
-    df['Description'].str.contains(r'MediCalforFamily', na=False),
+    df['Description'].str.contains(r'MEDICALFORFAMILY', na=False),
     df['Description'].str.contains(r'NINTENDO', na=False),
     df['Description'].str.contains(r'PAYPAL', na=False),
     df['Description'].str.contains(r'SO CAL EDISON', na=False),
@@ -62,7 +62,7 @@ conditions = [
     df['Description'].str.contains(r'PIZZA HUT', na=False),
     df['Description'].str.contains(r'AMZN', na=False),
     df['Description'].str.contains(r'APPLECOM', na=False),
-    df['Description'].str.contains(r'CSC SERVICEWORKS', na=False),
+    df['Description'].str.contains(r'CSC', na=False),
     df['Description'].str.contains(r'GOOGLE', na=False),
     df['Description'].str.contains(r'HEALTHCARE', na=False),
     df['Description'].str.contains(r'TARGET', na=False),
@@ -70,21 +70,46 @@ conditions = [
     df['Description'].str.contains(r'FROM SHARES', na=False),
     df['Description'].str.contains(r'STATER', na=False),
     df['Description'].str.contains(r'STEAM', na=False),
-    df['Description'].str.contains(r'WALMART', na=False)
+    df['Description'].str.contains(r'WALMART', na=False),
+    df['Description'].str.contains(r'DIVIDEND', na=False),
+    df['Description'].str.contains(r'TACO BELL', na=False),
+    df['Description'].str.contains(r'RUBIOS', na=False),
+    df['Description'].str.contains(r'WINGSTOP', na=False),
+    df['Description'].str.contains(r'SCANMOBILE', na=False),
+    df['Description'].str.contains(r'ZENNI OPTICAL', na=False),
+    df['Description'].str.contains(r'STARBUCKS', na=False),
+    df['Description'].str.contains(r'SIMPLE GREEK', na=False),
+    df['Description'].str.contains(r'HOME DEPOT', na=False),
+    df['Description'].str.contains(r'ROUND TABLE', na=False),
+    df['Description'].str.contains(r'VOLCANO BURGER', na=False),
+    df['Description'].str.contains(r'TRINITY EUROPEAN', na=False),
+    df['Description'].str.contains(r'PAID CHECK', na=False),
+    df['Description'].str.contains(r'RUNNERS HIGH', na=False),
+    df['Description'].str.contains(r'FISH IN A BOTTLE', na=False),
+    df['Description'].str.contains(r'YOGURT', na=False),
+    df['Description'].str.contains(r'AUTOPAY AUTO-PMT', na=False),
+    df['Description'].str.contains(r'ZELLEAUTOMATED', na=False),
+    df['Description'].str.contains(r'EL POLLO LOCO', na=False),
+    df['Description'].str.contains(r'ONLINE PAYMENT, THANK YOU', na=False)
 ]
 
 choices = [
-    'Charter Service', 'CITI AUTOPAY', 'CITI CARD', 'HOMESITE INS PREM', 'HPS MHC', 'MediCalforFamily',
+    'CHARTER SERVICE', 'CITI AUTOPAY', 'CITI CARD', 'HOMESITE INS PREM', 'HPS MHC', 'MEDICAL',
     'NINTENDO', 'PAYPAL', 'SO CAL EDISON', 'SPECTRUM', 'T-MOBILE', 'UNITED FIN CAS INS', 'ARCO', 'CARLS JR',
     'CHEESECAKE', 'CHICK-FIL-A', 'CHIPOTLE', 'COFFEE BEAN', 'COSTCO', 'Pay Check', 'DOMINOS',
-    'Etsy', 'GoFundMe', 'CAR WASH', 'HABIT', 'IN N OUT', 'JOE SCHMOE', 'Kindle', 'LITTLE LADYBUG',
+    'ETSY', 'GOFUNDME', 'CAR WASH', 'HABIT', 'IN N OUT', 'JOE SCHMOE', 'KINDLE', 'LITTLE LADYBUG',
     'MCDONALDS', 'SHOES', 'AUTO PARTS', 'PANDA EXPRESS', 'PIEOLOGY', 'PIZZA HUT', 'AMAZON', 'APPLECOM',
-    'CSC SERVICEWORKS', 'GOOGLE', 'HEALTHCARE', 'TARGET', 'TRANSFER TO SHARES', 'TRANSFER FROM SHARES', 'STATERBROS', 'STEAM', 'WALMART'
+    'CSC', 'GOOGLE', 'HEALTHCARE', 'TARGET', 'TRANSFER TO SHARES', 'TRANSFER FROM SHARES', 'STATERBROS',
+    'STEAM', 'WALMART', 'DIVIDEND', 'TACO BELL', 'RUBIOS', 'WINGSTOP', 'SCANMOBILE', 'ZENNI OPTICAL', 'STARBUCKS', 'SIMPLE GREEK', 'HOME DEPOT',
+    'ROUND TABLE', 'VOLCANO BURGER', 'TRINITY EUROPEAN', 'PAID CHECK', 'RUNNERS HIGH', 'FISH IN A BOTTLE', 'YOGURT', 'AUTOPAY AUTO-PMT', 'ZELLEAUTOMATED',
+    'EL POLLO LOCO', 'CREDIT PAYMENT'
 ]
 print(len(conditions))
 print(len(choices))
 
 df['ChargeType'] = np.select(conditions, choices, default='NA')
+
+
 # Citi = 'Status,Date,Description,Debit,Credit,Member Name'
 # NFed = "Date", "No.", "Description", "Debit", "Credit"
 
