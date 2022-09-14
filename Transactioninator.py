@@ -101,15 +101,26 @@ choices = [
     'MCDONALDS', 'SHOES', 'AUTO PARTS', 'PANDA EXPRESS', 'PIEOLOGY', 'PIZZA HUT', 'AMAZON', 'APPLECOM',
     'CSC', 'GOOGLE', 'HEALTHCARE', 'TARGET', 'TRANSFER TO SHARES', 'TRANSFER FROM SHARES', 'STATERBROS',
     'STEAM', 'WALMART', 'DIVIDEND', 'TACO BELL', 'RUBIOS', 'WINGSTOP', 'SCANMOBILE', 'ZENNI OPTICAL', 'STARBUCKS', 'SIMPLE GREEK', 'HOME DEPOT',
-    'ROUND TABLE', 'VOLCANO BURGER', 'TRINITY EUROPEAN', 'PAID CHECK', 'RUNNERS HIGH', 'FISH IN A BOTTLE', 'YOGURT', 'AUTOPAY AUTO-PMT', 'ZELLEAUTOMATED',
+    'ROUND TABLE', 'VOLCANO BURGER', 'TRINITY EUROPEAN', 'PAID CHECK', 'RUNNERS HIGH', 'FISH IN A BOTTLE', 'YOGURT', 'AUTOPAY AUTO-PMT', 'GAS BILL',
     'EL POLLO LOCO', 'CREDIT PAYMENT'
+]
+
+fastFood = [
+    'CARLS JR', 'CHEESECAKE', 'CHICK-FIL-A', 'CHIPOTLE', 'COFFEE BEAN', 'DOMINOS', 'HABIT', 'IN N OUT', 'JOE SCHMOE', 'MCDONALDS',
+    'PANDA EXPRESS', 'PIEOLOGY', 'PIZZA HUT', 'TACO BELL', 'RUBIOS', 'WINGSTOP', 'STARBUCKS', 'SIMPLE GREEK', 'ROUND TABLE', 'VOLCANO BURGER',
+    'FISH IN A BOTTLE', 'YOGURT', 'EL POLLO LOCO'
+]
+
+grocery = [
+    'COSTCO', 'WALMART', 'STATERBROS'
 ]
 print(len(conditions))
 print(len(choices))
 
 df['ChargeType'] = np.select(conditions, choices, default='NA')
 
-
+df.loc[df['ChargeType'].isin(fastFood), 'Category'] = 'Fast Food'
+df.loc[df['ChargeType'].isin(grocery), 'Category'] = 'Groceries'
 # Citi = 'Status,Date,Description,Debit,Credit,Member Name'
 # NFed = "Date", "No.", "Description", "Debit", "Credit"
 
