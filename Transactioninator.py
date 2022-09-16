@@ -1,12 +1,17 @@
 from cmath import nan
-from msilib.schema import Condition
+from msilib.schema import Condition, Directory
 from pickle import FALSE
 import pandas as pd
 import numpy as np
 import re
+import os
+from pathlib import Path
+
 
 file = (r'C:\Users\bryan\Desktop\Transactions\transactions.CSV')
 refined = (r'C:\Users\bryan\Desktop\Transactions\refined.xlsx')
+directory = Path(
+    'C:/Users/bryan/Desktop/Transactions/refined.xlsx')
 nf = pd.read_csv(file, parse_dates=['Date'])
 
 citiCsv = (r'C:\Users\bryan\Desktop\Transactions\Citibank.CSV')
@@ -115,14 +120,22 @@ grocery = [
     'COSTCO', 'WALMART', 'STATERBROS'
 ]
 
+bills = [
+    'SO CAL EDISON', 'SPECTRUM', 'T-MOBILE', 'CAR INSURANCE', 'CSC', 'GAS BILL', 'RENTERS INSURANCE', 'HEALTHCARE', 'MEDICAL'
+]
 
-print(len(conditions))
-print(len(choices))
+car = [
+    'TRINITY EUROPEAN', 'CAR WASH', 'ARCO', 'AUTO PARTS'
+]
 
 df['ChargeType'] = np.select(conditions, choices, default='NA')
-
+df['Category'] = 'Misc'
 df.loc[df['ChargeType'].isin(fastFood), 'Category'] = 'Fast Food'
 df.loc[df['ChargeType'].isin(grocery), 'Category'] = 'Groceries'
+df.loc[df['ChargeType'].isin(bills), 'Category'] = 'Bills'
+df.loc[df['ChargeType'].isin(car), 'Category'] = 'Car'
+
+
 # Citi = 'Status,Date,Description,Debit,Credit,Member Name'
 # NFed = "Date", "No.", "Description", "Debit", "Credit"
 
@@ -137,4 +150,10 @@ df.loc[df['ChargeType'].isin(grocery), 'Category'] = 'Groceries'
 # print(df['Description'].unique())
 writer = pd.ExcelWriter(refined, engine='xlsxwriter')
 df.to_excel(writer, sheet_name='refined')
-writer.save()
+writer.close()
+
+if directory.is_file():
+    print('File exists')
+    os.system(refined)
+else:
+    print('file does not exist')
