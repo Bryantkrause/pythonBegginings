@@ -63,7 +63,6 @@ def parseData(fileFolder):
         # # get meter hours and row number
         for x, line in enumerate(text.split('\n')):
             if hourLine.match(line):
-                rowNum, *hour = line.split()
                 meterHours = re.search(r'\d+', line).group()
                 hours.append(meterHours)
 

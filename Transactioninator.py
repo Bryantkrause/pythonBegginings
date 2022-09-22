@@ -26,7 +26,8 @@ citi['Location'] = 'CitiBank'
 
 df = pd.concat([nf, citi], axis=0, ignore_index=True)
 print(df.fillna(0))
-
+df = df.fillna(0)
+df['Total'] = df['Debit'] + df['Credit']
 # df['Description'] = df['Description'].str.upper()
 df['Description'] = df['Description'].apply(lambda x: x.upper())
 conditions = [
@@ -136,6 +137,9 @@ df.loc[df['ChargeType'].isin(bills), 'Category'] = 'Bills'
 df.loc[df['ChargeType'].isin(car), 'Category'] = 'Car'
 
 
+chargeType = df.groupby(['Month', 'ChargeType'])['Total'].sum()
+summary = df.groupby(['Month','Category'])['Total'].sum()
+
 # Citi = 'Status,Date,Description,Debit,Credit,Member Name'
 # NFed = "Date", "No.", "Description", "Debit", "Credit"
 
@@ -150,6 +154,8 @@ df.loc[df['ChargeType'].isin(car), 'Category'] = 'Car'
 # print(df['Description'].unique())
 writer = pd.ExcelWriter(refined, engine='xlsxwriter')
 df.to_excel(writer, sheet_name='refined')
+chargeType.to_excel(writer, sheet_name='condensed')
+summary.to_excel(writer, sheet_name='Summary')
 writer.close()
 
 if directory.is_file():
