@@ -129,16 +129,35 @@ car = [
     'TRINITY EUROPEAN', 'CAR WASH', 'ARCO', 'AUTO PARTS'
 ]
 
+Bank = [
+    "DIVIDEND",
+    "TRANSFER TO SHARES",
+    "TRANSFER FROM SHARES"
+]
+
+cardPayments = [
+    "CREDIT PAYMENT",
+    "AUTOPAY AUTO-PMT",
+    "CITI CARD",
+    "CITI AUTOPAY"
+]
+
+money = ["Pay Check"]
+
+
 df['ChargeType'] = np.select(conditions, choices, default='NA')
 df['Category'] = 'Misc'
 df.loc[df['ChargeType'].isin(fastFood), 'Category'] = 'Fast Food'
 df.loc[df['ChargeType'].isin(grocery), 'Category'] = 'Groceries'
 df.loc[df['ChargeType'].isin(bills), 'Category'] = 'Bills'
 df.loc[df['ChargeType'].isin(car), 'Category'] = 'Car'
+df.loc[df['ChargeType'].isin(money), 'Category'] = 'Pay Check'
+df.loc[df['ChargeType'].isin(cardPayments), 'Category'] = 'Credit Card'
+df.loc[df['ChargeType'].isin(Bank), 'Category'] = 'Bank Transactions'
 
 
 chargeType = df.groupby(['Month', 'ChargeType'])['Total'].sum()
-summary = df.groupby(['Month','Category'])['Total'].sum()
+summary = df.groupby(['Month', 'Category'])['Total'].sum()
 
 # Citi = 'Status,Date,Description,Debit,Credit,Member Name'
 # NFed = "Date", "No.", "Description", "Debit", "Credit"
