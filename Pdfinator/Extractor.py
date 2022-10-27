@@ -46,7 +46,7 @@ def parseData(fileFolder):
 # creating a pdf file object
     for y , file in enumerate(fileFolder):
         # this is the visual to watch it do its thing
-        print(y)
+        print(y, file)
         invoiceList.append(y)
 
         with pdfplumber.open(file) as pdf:
